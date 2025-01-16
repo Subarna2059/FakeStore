@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { axiosInstance } from '../utils/APICalls'
 import { toast } from 'react-toastify'
+import Bigloader from '../components/common/Bigloader'
 
 const ProductDetail = () => {
+    const [loading, setLoading] = useState(false)
     const [productDetails, setProductDetails] = useState(undefined)
     const {id} = useParams("id")
     const getDetail = async () => {
         try {
+            setLoading(true)
         const data = await axiosInstance.get(`/products/${id}`)
         setProductDetails(data);
+        setLoading(false)
         console.log(productDetails);
-        
         } catch (error) {
+            setLoading(false)
             toast("error")
         }
     }
@@ -21,6 +25,7 @@ const ProductDetail = () => {
     },[])
   return (
     <>
+    {loading? <Bigloader /> :
     <div className='row'>
         <div className='image col-5'>
             <img src={productDetails?.image} alt="" />
@@ -30,9 +35,10 @@ const ProductDetail = () => {
             <h6>{productDetails?.title}</h6>
             <p>{productDetails?.description}</p>
             <p>{Number(productDetails?.price).toFixed(2)}</p>
-            <span className="badge badge-secondary">{productDetails?.category}</span>
+            <Link to={`/category/${productDetails?.category}`}><span className="badge badge-secondary">{productDetails?.category}</span></Link>
         </div>
     </div>
+}
     </>
   )
 }

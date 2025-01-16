@@ -32,3 +32,14 @@ body {
 .formContainer form {
   width: 30VW;
 }
+
+.category-heading {
+  font-size: 21px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-transform: capitalize;
+  margin: 18px 0px;
+  letter-spacing: 0.28px;
+}
+
