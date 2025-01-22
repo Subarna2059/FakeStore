@@ -9,9 +9,9 @@ const Category = () => {
     const getProductByCategory = async() => {
         try{
         const responseData = await axiosInstance.get(`/products/category/${slug}`);
-        setProduct(responseData.data)
-        console.log(responseData.data);
-        
+        const data = await responseData
+        setProduct(data.data)
+        console.log(product);
         
         } catch (e) {
             toast(e.message || "Something went wrong")
@@ -23,14 +23,15 @@ const Category = () => {
   return (
     <>
         <h6 className='category-heading'>{slug}</h6>
-        {product?.map((item) =>{
-            <div className="card col-4" style="width: 18rem;">
-            <img className="card-img-top" src={product?.image} alt="Card image cap"/>
+        {product?.map((item) =>{ return (
+            <div className="card col-4" style={{width: "18rem"}}>
+            <img className="card-img-top" src={item?.image} alt="Card image cap"/>
             <div className="card-body">
-              <h5 className="card-title">{product?.title}</h5>
-              <p className="card-text">{Number(product?.price).toFixed(2)}</p>
+              <h5 className="card-title">{item?.title}</h5>
+              <p className="card-text">{Number(item?.price).toFixed(2)}</p>
             </div>
           </div>
+        )
         })
 }
     </>

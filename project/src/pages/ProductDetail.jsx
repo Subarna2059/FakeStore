@@ -11,8 +11,9 @@ const ProductDetail = () => {
     const getDetail = async () => {
         try {
             setLoading(true)
-        const data = await axiosInstance.get(`/products/${id}`)
-        setProductDetails(data);
+        const responseData = await axiosInstance.get(`/products/${id}`)
+        const data = await responseData
+        setProductDetails(data.data);
         setLoading(false)
         console.log(productDetails);
         } catch (error) {
